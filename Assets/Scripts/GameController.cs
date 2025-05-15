@@ -75,21 +75,17 @@ public class GameController : MonoBehaviour
     {
         int piece = 0;
 
-        int x = 0;
-        int z = 0;
-
-        do
+        for (int i = 0; i < tileSize; i++)
         {
-            x = Random.Range(0, tileSize -1);
-            z = Random.Range(0, tileSize - 1);
-
-            if (cubeUsed[x,z] == true)
-                continue;
-            tilePieces.Add(Instantiate(piecePref));
-            MakePiece(tilePieces[piece], x,z);
-            piece++;
+            for (int j= 0; j < tileSize; j++)
+            {
+                if (cubeUsed[i, j] == true)
+                    continue;
+                tilePieces.Add(Instantiate(piecePref));
+                MakePiece(tilePieces[piece], i, j);
+                piece++;
+            }
         }
-        while(false);
     }
 
     void MakePiece(GameObject pieceCenter, int posX, int posZ)
@@ -108,7 +104,7 @@ public class GameController : MonoBehaviour
 
         cubes[posX, posZ].transform.parent = pieceCenter.transform;
         cubeUsed[posX, posZ] = true;
-        int size = Random.Range(0, 5);
+        int size = Random.Range(3, 6);
         for (int i = 0; i< size; i++)
         {
             int[] dir = RandomDirection(posX, posZ);
