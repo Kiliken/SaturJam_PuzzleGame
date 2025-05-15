@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -21,6 +22,9 @@ public class GameController : MonoBehaviour
     private Vector3[,] validPos;
     private bool[,] cubeUsed;
 
+    private Vector3 screenPos;
+    private Vector3 something;
+
     private List<GameObject> tilePieces = new List<GameObject>();
 
 
@@ -34,7 +38,24 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+
+            /*screenPos = Input.mousePosition;
+            screenPos.z = -Camera.main.transform.position.z;
+            hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(screenPos), Vector2.zero);
+            if (hit.collider != null)
+            {
+                Debug.Log(hit.collider.gameObject.name + " has been hit");
+                if (hit.collider.gameObject.tag == "Piece")
+                {
+
+                }
+            }
+
+            */
+        }
     }
 
 
@@ -45,8 +66,8 @@ public class GameController : MonoBehaviour
         cubeUsed = new bool[size, size];
 
         float startPosX = -(size / 2 - .5f);
-        float startPosZ = (size / 2 - .5f);
-        Vector3 cursorPos = new Vector3(startPosX, .5f, startPosZ);
+        float startPosY = size / 2 - .5f;
+        Vector3 cursorPos = new Vector3(startPosX, startPosY, .5f);
 
         
 
@@ -67,7 +88,7 @@ public class GameController : MonoBehaviour
             }
 
             cursorPos.x = startPosX;
-            cursorPos += Vector3.back;
+            cursorPos += Vector3.down;
         }
     }
 
@@ -81,7 +102,7 @@ public class GameController : MonoBehaviour
             {
                 if (cubeUsed[i, j] == true)
                     continue;
-                tilePieces.Add(Instantiate(piecePref));
+                tilePieces.Add(Instantiate(piecePref, validPos[i,j], Quaternion.identity));
                 MakePiece(tilePieces[piece], i, j);
                 piece++;
             }
@@ -116,6 +137,8 @@ public class GameController : MonoBehaviour
             cubes[dir[0], dir[1]].GetComponent<MeshRenderer>().SetPropertyBlock(propertyBlock);
             cubeUsed[dir[0], dir[1]] = true;
         }
+
+        
     }
 
     int[] RandomDirection(int a, int b)
