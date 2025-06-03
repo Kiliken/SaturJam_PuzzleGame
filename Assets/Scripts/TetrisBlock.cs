@@ -119,7 +119,7 @@ public class TetrisBlock : MonoBehaviour
                 _mousePos = Input.mousePosition;
                 _isRotate = false;
             }
-            if (Mathf.Abs(x) + 200 < Mathf.Abs(y * 2) && y < 0)
+            if (Mathf.Abs(x) + 50 < Mathf.Abs(y * 2) && y < 0)
             {
                 transform.position += Vector3.down;
                 if (!ValidMove())
